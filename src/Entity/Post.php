@@ -2,14 +2,21 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\Timestampable;
 use App\Repository\PostRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 #[ORM\Table(name:'`posts`')]
-
+#[ORM\UniqueConstraint(
+    name:'unique_slug_for_publish_date',
+    columns: ['published_at', 'slug']
+)]
+#[ORM\HasLifecycleCallbacks]
 class Post
 {
+    use Timestampable;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -27,8 +34,6 @@ class Post
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private $publishedAt;
 
-    #[ORM\Column(type: 'datetime_immutable')]
-    private $createdAt;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
@@ -83,18 +88,6 @@ class Post
     public function setPublishedAt(?\DateTimeImmutable $publishedAt): self
     {
         $this->publishedAt = $publishedAt;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
 
         return $this;
     }
