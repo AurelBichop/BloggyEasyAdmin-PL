@@ -21,7 +21,18 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('@EasyAdmin/page/login.html.twig',[
+            'page_title' => 'Bloggy',
+            'username_label' => 'Email',
+            'last_username' => $lastUsername,
+            'error' => $error,
+            'csrf_token_intention' => 'authenticate',
+            'sign_in_label' => 'Connection',
+            // the 'name' HTML attribute of the <input> used for the username field (default: '_username')
+            'username_parameter' => 'email',
+            // the 'name' HTML attribute of the <input> used for the password field (default: '_password')
+            'password_parameter' => 'password',
+        ]);
     }
 
     #[Route(path: '/logout', name: 'app_logout')]
