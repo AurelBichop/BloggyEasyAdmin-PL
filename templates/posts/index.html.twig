@@ -10,7 +10,9 @@
                     {{post.title}}
                 </a>
             </h2>
-            <p>Published {{post.publishedAt | date }} by {{post.author.name}} </p>
+            <p>
+                Published <time datetime="{{post.publishedAt | date('Y-m-d H:i:s') }}">{{post.publishedAt | date }}</time> by {{post.author.name}} 
+            </p>
             <p>{{post.body | u.truncate(50,'...',false)}}</p>
         </article>
     {% endfor %}
