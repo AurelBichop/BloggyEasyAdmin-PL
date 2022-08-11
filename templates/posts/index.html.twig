@@ -5,8 +5,13 @@
 
     {% for post in posts %}
         <article>
-            <h2><a href="{{path('app_posts_show',{slug:post.slug})}}">{{post.title}}</a></h2>
-            <p>{{post.body}}</p>
+            <h2>
+                <a href="{{path('app_posts_show',{slug:post.slug})}}">
+                    {{post.title}}
+                </a>
+            </h2>
+            <p>Published {{post.publishedAt | date }} by {{post.author.name}} </p>
+            <p>{{post.body | u.truncate(50,'...',false)}}</p>
         </article>
     {% endfor %}
 
