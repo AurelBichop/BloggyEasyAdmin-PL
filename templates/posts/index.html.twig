@@ -11,7 +11,7 @@
                 </a>
             </h2>
             <p>
-                Published <time datetime="{{post.publishedAt | date('Y-m-d H:i:s') }}">{{post.publishedAt | date }}</time> by {{post.author.name}} 
+                Published <time datetime="{{post.publishedAt | date('Y-m-d H:i') }}">{{post.publishedAt|ago(locale='fr')}} le {{post.publishedAt | date('d-m-Y à H:i') }}</time> par {{post.author.name}} 
             </p>
             <p>{{post.body | u.truncate(50,'...',false)}}</p>
         </article>

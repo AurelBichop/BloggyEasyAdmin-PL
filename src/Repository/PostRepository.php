@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -38,6 +40,17 @@ class PostRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    //Search with Criteria Doctrine
+    public function findAllPublishedOrderedBy(): Collection
+    {
+        $criteria = (new Criteria)
+            ->andWhere(Criteria::expr()->neq('publishedAt',null))
+            ->orderBy(['publishedAt'=> Criteria::DESC])
+        ;
+
+        return $this->matching($criteria);
+    }    
 
 //    /**
 //     * @return Post[] Returns an array of Post objects
