@@ -27,7 +27,8 @@ class PostController extends AbstractController
         requirements:[
             'year' => '\d{4}',
             'month' => '\d{2}',
-            'day' => '\d{2}'
+            'day' => '\d{2}',
+            'slug' => '[a-z0-9\-]+'
         ],
         name: 'app_posts_show',
         methods: ['GET'])
