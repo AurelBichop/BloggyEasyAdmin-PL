@@ -50,6 +50,16 @@ class PostRepository extends ServiceEntityRepository
         ;
 
         return $this->matching($criteria);
+    }
+    
+    public function findAllPublishedOrderedByQuery(): Collection
+    {
+        $criteria = (new Criteria)
+            ->andWhere(Criteria::expr()->neq('publishedAt',null))
+            ->orderBy(['publishedAt'=> Criteria::DESC])
+        ;
+
+        return $this->matching($criteria);
     }    
 
     public function findOneByPublishDateAndSlug(int $year,int $month,int $day,string $slug): ?Post
