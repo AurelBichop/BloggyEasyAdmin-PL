@@ -10,6 +10,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PostController extends AbstractController
 {
+
+    public function __construct(private PostRepository $postRepository){}
+
+
     #[Route('/', name: 'app_home')]
     public function index(PostRepository $postRepository): Response
     {
@@ -18,9 +22,11 @@ class PostController extends AbstractController
         return $this->render('posts/index.html.twig', compact('posts'));
     }
 
-    #[Route('/post/{slug}', name: 'app_posts_show')]
-    public function show(Post $post): Response
+    #[Route('/post/{year}/{month}/{day}/{slug}', name: 'app_posts_show')]
+    public function show(int $year,int $month,int $day,string $slug): Response
     {
+        $post = $this->postRepository->findOneByPublishDateAndSlug($year,$month,$day,$slug);
+        
         return $this->render('posts/show.html.twig', compact('post'));
     }
 }

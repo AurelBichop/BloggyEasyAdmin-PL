@@ -103,4 +103,14 @@ class Post
 
         return $this;
     }
+
+    public function getPathParams(): array
+    {
+        return [
+            'day'   => $this->getPublishedAt()->format('d'),
+            'month' => $this->getPublishedAt()->format('m'),
+            'year'  => $this->getPublishedAt()->format('Y'),
+            'slug'  => $this->getSlug()
+        ];
+    }
 }
