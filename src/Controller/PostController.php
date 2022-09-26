@@ -14,7 +14,7 @@ class PostController extends AbstractController
     public function __construct(private PostRepository $postRepository){}
 
 
-    #[Route('/', name: 'app_home')]
+    #[Route('/', name: 'app_home', methods: ['GET'])]
     public function index(PostRepository $postRepository): Response
     {
         $posts = $postRepository->findAllPublishedOrderedBy();
@@ -22,7 +22,7 @@ class PostController extends AbstractController
         return $this->render('posts/index.html.twig', compact('posts'));
     }
 
-    #[Route('/post/{year}/{month}/{day}/{slug}', name: 'app_posts_show')]
+    #[Route('/post/{year<\d{4}>}/{month<\d{2}>}/{day<\d{2}>}/{slug<[a-z0-9\-]+>}', name: 'app_posts_show', methods: ['GET'])]
     public function show(int $year,int $month,int $day,string $slug): Response
     {
         $post = $this->postRepository->findOneByPublishDateAndSlug($year,$month,$day,$slug);
